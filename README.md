@@ -1,5 +1,9 @@
 ﻿# MiscFunc For OpenBVE
 
+[![Build status](https://ci.appveyor.com/api/projects/status/25pncalfbxoejtq8?svg=true)](https://ci.appveyor.com/project/s520/miscfunc-for-openbve)
+[![Report](https://inspecode.rocro.com/badges/github.com/s520/MiscFunc_For_OpenBVE/report?token=RXHF7VfFX6DpMRx8rWKa8MI2xfRv5RGxqzcqZoaMyjg&branch=master)](https://inspecode.rocro.com/reports/github.com/s520/MiscFunc_For_OpenBVE/branch/master/summary)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/89e90f837903411893f5010467133157)](https://www.codacy.com/project/s520/MiscFunc_For_OpenBVE/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=s520/MiscFunc_For_OpenBVE&amp;utm_campaign=Badge_Grade_Dashboard)
+
 Misc function Plugin for OpenBVE on Linux or Windows
 
 このプラグインは.NETアセンブリプラグインです。
