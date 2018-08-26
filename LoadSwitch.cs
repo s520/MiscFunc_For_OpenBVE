@@ -24,6 +24,7 @@ namespace MiscFunc {
             internal int switch_init_ { get; private set; }
             internal int switch_step_ { get; private set; }
             internal int switch_is_loop_ { get; private set; }
+            internal VirtualKeys?[] switch_modifier_key_ { get; private set; }
             internal VirtualKeys?[] switch_key_ { get; private set; }
 
             // --- コンストラクタ ---
@@ -37,6 +38,7 @@ namespace MiscFunc {
                 switch_init_ = 0;
                 switch_step_ = 1;
                 switch_is_loop_ = 0;
+                switch_modifier_key_ = new VirtualKeys?[] { null, null };
                 switch_key_ = new VirtualKeys?[] { null, null };
             }
 
@@ -116,6 +118,9 @@ namespace MiscFunc {
                     }
                     if (int.TryParse(parsed_data["Switch" + i]["Loop"], out value)) {
                         switch_is_loop_ = value;
+                    }
+                    for (int j = 0; j < 2; j++) {
+                        switch_modifier_key_[j] = LoadKeyCfg(parsed_data["Switch" + i]["ModifierKey" + j]);
                     }
                     for (int j = 0; j < 2; j++) {
                         switch_key_[j] = LoadKeyCfg(parsed_data["Switch" + i]["Key" + j]);

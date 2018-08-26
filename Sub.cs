@@ -49,6 +49,7 @@ namespace MiscFunc {
         private int brake_notch_;
         private int power_notch_;
         internal double current_ { get; private set; }  //!< 電流値[A]
+        private VirtualKeys? modifier_key_;  //!< 修飾キー
         private int[] switch_;  //!< カスタムスイッチの状態
 
         // --- コンストラクタ ---
@@ -248,6 +249,30 @@ namespace MiscFunc {
             }
         }
 
+        /// <summary>
+        /// カスタムスイッチが押されたかどうかを判定する関数
+        /// </summary>
+        /// <param name="i">カスタムスイッチのナンバー</param>
+        /// <param name="key">押されたATSキー</param>
+        /// <param name="switch_config">カスタムスイッチの設定</param>
+        /// <returns>判定結果</returns>
+        private bool SwitchCheck(int i, VirtualKeys key, LoadSwitch.SwitchConfig switch_config) {
+            if (switch_config.switch_modifier_key_[i] != null) {
+                if (key != switch_config.switch_modifier_key_[i] && modifier_key_ != switch_config.switch_modifier_key_[i]) {
+                    return false;
+                }
+                if (key != switch_config.switch_key_[i] && modifier_key_ != switch_config.switch_key_[i]) {
+                    return false;
+                }
+                return true;
+            } else {
+                if (key != switch_config.switch_key_[i]) {
+                    return false;
+                }
+                return true;
+            }
+        }
+
         // --- 継承された関数 ---
         /// <summary>
         /// ゲーム開始時に呼び出される関数
@@ -360,11 +385,16 @@ namespace MiscFunc {
                 break;
             }
 
+            // 修飾キーの更新
+            if (modifier_key_ == null) {
+                modifier_key_ = key;
+            }
+
             // カスタムスイッチ
             for (int i = 0; i < LoadSwitch.ALL_SWITCH; i++) {
-                if (key == LoadSwitch.switch_config_[i].switch_key_[0]) {
+                if (SwitchCheck(0, key, LoadSwitch.switch_config_[i])) {
                     SwitchRight(i, ref switch_[i], LoadSwitch.switch_config_[i]);
-                } else if (key == LoadSwitch.switch_config_[i].switch_key_[1]) {
+                } else if (SwitchCheck(1, key, LoadSwitch.switch_config_[i])) {
                     SwitchLeft(i, ref switch_[i], LoadSwitch.switch_config_[i]);
                 }
             }
@@ -384,6 +414,11 @@ namespace MiscFunc {
                 break;
             default:
                 break;
+            }
+
+            // 修飾キーの更新
+            if (key == modifier_key_) {
+                modifier_key_ = null;
             }
         }
 
